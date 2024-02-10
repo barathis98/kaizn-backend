@@ -25,6 +25,8 @@ SECRET_KEY = "django-insecure-+t%jt5lf25&6@#_*(%)tvp4%qccrpjt8eg4$qi4a1f3!m1=()7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+INTERNAL_IPS = ["127.0.0.1"] 
+
 ALLOWED_HOSTS = []
 
 
@@ -39,7 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "backend",
-    "rest_framework.authtoken"
+    "rest_framework.authtoken",
+    "debug_toolbar"
 ]
 
 MIDDLEWARE = [
@@ -50,6 +53,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware"
 ]
 
 ROOT_URLCONF = "kaizn.urls"
@@ -155,6 +159,17 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://localhost:6379/",
+        "KEY_PREFIX": "kaizn",
+        "TIMEOUT": 60 * 15, 
+    }
+}
+
 
 AUTH_USER_MODEL = 'backend.User'
 

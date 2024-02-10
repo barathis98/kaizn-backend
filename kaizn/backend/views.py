@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+
+
 
 # Create your views here.
 # views.py
@@ -52,10 +56,11 @@ class CreateUserView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class ItemListView(APIView):
+
+    @method_decorator(cache_page(timeout=60 * 30))
     def get(self, request, format=None):
         items = Item.objects.all()
 
-        # Filter items based on query parameters
         name = request.query_params.get('name', None)
         category = request.query_params.get('category', None)
         stock_status = request.query_params.get('stock_status', None)
