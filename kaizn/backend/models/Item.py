@@ -4,7 +4,7 @@ from .tags import Tag
 class Item(models.Model):
     SKU = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
-    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    category_name = models.ForeignKey('Category', on_delete=models.CASCADE)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
     is_assembly = models.BooleanField(default=False)
     is_component = models.BooleanField(default=False)

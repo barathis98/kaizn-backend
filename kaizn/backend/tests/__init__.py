@@ -1,0 +1,1 @@
+from .item_test import ItemViewsTestCase
