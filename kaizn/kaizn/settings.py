@@ -29,11 +29,16 @@ INTERNAL_IPS = ["127.0.0.1"]
 
 ALLOWED_HOSTS = ['*']
 
+CORS_ORIGIN_ALLOW_ALL = True
+
+
 
 # Application definition
 
 INSTALLED_APPS = [
     # "django.contrib.admin",
+    "corsheaders",
+
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -42,19 +47,26 @@ INSTALLED_APPS = [
     "rest_framework",
     "backend",
     "rest_framework.authtoken",
-    "debug_toolbar"
+    "debug_toolbar",
+    "drf_yasg",
+
+
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    # "backend.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    # "backend.middleware.corsMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware"
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
 
 ROOT_URLCONF = "kaizn.urls"
 
@@ -73,6 +85,10 @@ TEMPLATES = [
         },
     },
 ]
+
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3000',
+# ]
 
 WSGI_APPLICATION = "kaizn.wsgi.application"
 
@@ -138,6 +154,18 @@ USE_I18N = True
 
 USE_TZ = True
 
+# CORS_ALLOW_ALL_ORIGINS = True  # Allow requests from any origin
+# CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in cross-origin requests
+# CORS_ALLOW_METHODS = [
+#     'DELETE',
+#     'GET',
+#     'OPTIONS',
+#     'PATCH',
+#     'POST',
+#     'PUT',
+# ]  # Specify the allowed HTTP methods
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -153,6 +181,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',  
 
     ],
     'DEFAULT_PERMISSION_CLASSES': [
